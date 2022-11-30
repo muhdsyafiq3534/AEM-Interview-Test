@@ -1,0 +1,24 @@
+
+.authentication-card {
+  width: 30%;
+  margin: 0 auto;
+  color: black;
+}
+
+.authentication-card-container {
+  min-height: 100vh;
+}
+
+.content {
+  text-align: center;
+}
+
+h3 {
+  text-align: center;
+}
+
+mat-form-field {
+  width: 80%;
+}
+
+

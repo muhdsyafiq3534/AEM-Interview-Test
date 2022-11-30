@@ -1,0 +1,22 @@
+<div class="authentication-card-container" fxLayout="column" fxLayoutAlign="center">
+  <mat-card class="authentication-card">
+    <mat-card-title>
+      <h2 class="content">Sign in to your dashboard</h2>
+    </mat-card-title>
+    <form [formGroup]="loginForm" fxLayout="column" fxLayoutAlign="center center">
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput type="text" formControlName="username" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" />
+      </mat-form-field>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <button mat-raised-button color="primary" fxLayoutAlign="left" (click)="onSubmit()">
+          SIGN IN
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>
