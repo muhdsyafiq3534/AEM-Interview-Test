@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DashboardClient } from '../clients/dashboard.client';
 import { AuthService } from '../services/auth.service';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
-import { MatTableDataSource } from '@angular/material/table';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { Chart } from 'chart.js/auto';
 
 export interface chartData {
   name: string
@@ -34,6 +34,7 @@ export interface table {
 export class DashboardComponent implements OnInit {
 
   public dashboard: Observable<any> = this.DashboardClient.getDashboardData();
+
   test1: any
   donutName: any[] = []
   donutValue: any[] = []
@@ -47,7 +48,7 @@ export class DashboardComponent implements OnInit {
     private DashboardClient: DashboardClient
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.getData()
   }
 
@@ -76,16 +77,16 @@ export class DashboardComponent implements OnInit {
 
       this.dataSource = this.users
       console.log(this.dataSource, "datasorce");
+
     })
   }
-
   public doughnutChartType: ChartType = 'doughnut';
   public doughnutChartData: ChartData<'doughnut'> = {
     labels: this.donutName,
     datasets: [
       {
         data: this.donutValue,
-        //backgroundColor: ["red", "green", "blue"],
+        backgroundColor: ["red", "yellow", "blue","purple"],
       },
     ]
   };
@@ -95,4 +96,15 @@ export class DashboardComponent implements OnInit {
     labels: ["Barchart"],
     datasets: this.barName
   };
+
+  public doughnutChartLabels: string[] = this.donutName;
+  public doughnutChartDatasets: ChartConfiguration<'doughnut'>['data']['datasets'] = [
+    { data: this.donutValue },
+  ];
+
+  public chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+}
+
 }
