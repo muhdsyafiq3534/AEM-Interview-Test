@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class DashboardClient {
+
   constructor(
     private http: HttpClient
     ) {}
