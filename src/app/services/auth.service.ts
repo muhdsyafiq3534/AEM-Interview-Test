@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { BehaviorSubject, map, Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { AuthenticationClient } from '../clients/authentication.client';
-import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +14,16 @@ export class AuthService {
   constructor(
     private authenticationClient: AuthenticationClient,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private snackBar: MatSnackBar
   ) { }
 
   public login(username: string, password: string): void {
     this.authenticationClient.login(username, password).subscribe((token) => {
       localStorage.setItem(this.tokenKey, token.replaceAll('"', ''));
       this.router.navigate(['/dashboard']);
+    }, error => {
+       this.snackBar.open("Invalid Email and Password", "OK", { duration: 10000 });
     });
   }
 

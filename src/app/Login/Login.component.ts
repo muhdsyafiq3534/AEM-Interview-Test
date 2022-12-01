@@ -23,21 +23,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  get username() { return this.loginForm.controls }
-
   get f() { return this.loginForm.controls; }
-
-
-
-  get formControl() {
-    return this.loginForm.controls;
-  }
 
   public onSubmit() {
     this.submitted = true;
-
-    if (this.loginForm.invalid)
-    {
+    if (this.loginForm.invalid) {
       return;
     }
     this.AuthService.login(this.loginForm.get('username')!.value,this.loginForm!.get('password')!.value)

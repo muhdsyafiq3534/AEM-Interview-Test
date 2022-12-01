@@ -11,22 +11,6 @@ export interface chartData {
   value: number
 }
 
-export interface barData {
-  name: string
-  value: number
-}
-
-export interface barDetail {
-  data: any
-  label: any
-}
-
-export interface donutDetail {
-  value: number
-  name: string
-
-}
-
 export interface table {
   firstName: any
   lastName: any
@@ -41,24 +25,15 @@ export interface table {
 export class DashboardComponent implements OnInit {
 
   public dashboard: Observable<any> = this.DashboardClient.getDashboardData();
-
   @ViewChild('barCanvas') barCanvas: ElementRef | undefined;
   barChart: any;
-
-
-  test1: any
-  donut1: donutDetail[] = []
-  donutName: any[] = []
-  donutValue: any[] = []
-  barName: barDetail[] = []
+  tableData: any
   users: table[] = []
   dataSource: any
-  displayedColumns: string[] = ["no","First Name", "Last Name", "User Name"];
-
+  displayedColumns: string[] = ["no", "First Name", "Last Name", "User Name"];
   getDonut: any
   getDonutName: any[] = []
   getDonutValue: number[] = []
-
   getBar: any
   getBarName: any[] = []
   getBarValue: any[] = []
@@ -83,115 +58,68 @@ export class DashboardComponent implements OnInit {
 
   getData() {
     this.dashboard.subscribe(res => {
-      this.test1 = res
-
-      this.test1.chartDonut.forEach((x: chartData) => {
-        this.donutName.push(x.name)
-        this.donutValue.push(x.value)
-      });
-
-      this.test1.chartBar.forEach((x: chartData) => {
-        let data = { data: [x.value], label: x.name }
-        this.barName.push(data)
-      });
-
-      this.test1.tableUsers.forEach((x: table) => {
+      this.tableData = res
+      this.tableData.tableUsers.forEach((x: table) => {
         let data = { firstName: x.firstName, lastName: x.lastName, username: x.username }
         this.users.push(data)
       });
-
       this.dataSource = this.users
-
     })
   }
-  public doughnutChartType: ChartType = 'doughnut';
-  public doughnutChartData: ChartData<'doughnut'> = {
-    labels: this.donutName,
-    datasets: [
-      {
-        data: this.donutValue,
-        backgroundColor: ["red", "yellow", "blue", "purple"],
-      },
-    ]
-  };
-
-  public barChartType: ChartType = 'bar';
-  public barChartData: ChartData<'bar'> = {
-    labels: ["Barchart"],
-    datasets: this.barName
-  };
-
-
-  ////////////////////////////////////
 
   getdoughnutChart() {
-    this.dashboard.subscribe(res =>{
+    this.dashboard.subscribe(res => {
       this.getDonut = res
       this.getDonut.chartDonut.forEach((x: chartData) => {
-
-        let data =  x.name
+        let data = x.name
         this.getDonutName.push(data)
-
-        //let data1 =  { x.value}
         this.getDonutValue.push(x.value)
       });
-      //console.log(this.getDonutName,'name');
-      //console.log(this.getDonutValue,'value');
       var myChart = new Chart("myChart1", {
         type: 'doughnut',
         data: {
           labels: this.getDonutName,
           datasets: [{
-            data: this.getDonutValue
-          }]
+            data: this.getDonutValue,
+            backgroundColor: ["#CACFD2", "#626567","#909497","#A6ACAF"],
+          }],
         },
         options: {
           responsive: true,
           layout: {
             autoPadding: true,
-              padding: {
-                  left: 0
-              }
+            padding: {
+              left: 0
+            }
           }
-      }
+        }
       });
     })
-
-    //console.log(this.getDonutName,'name');
-    //console.log(this.getDonutValue,'value');
-
   }
 
   getBarchart() {
-    this.dashboard.subscribe(res =>{
+    this.dashboard.subscribe(res => {
       this.getBar = res
-
       this.getBar.chartBar.forEach((x: chartData) => {
-        let data = { data: [x.value]}
-
-        let data1 =[x.value]
-
         this.getBarName.push(x.name)
         this.getBarValue.push(x.value)
       });
-      // console.log(this.getBarName,"name");
-      // console.log(this.getBarValue,"data");
-
       var myChart = new Chart("myChart", {
         type: 'bar',
         data: {
           labels: this.getBarName,
           datasets: [{
             data: this.getBarValue,
-            //label: "BarChart",
+            label: "BarChart",
+            backgroundColor: ["#909497"],
           }],
         },
         options: {
           plugins: {
             legend: {
-                display: false,
+              display: false,
             },
-        },
+          },
           scales: {
             y: {
               beginAtZero: true
@@ -200,7 +128,5 @@ export class DashboardComponent implements OnInit {
         }
       });
     })
-
   }
-
 }

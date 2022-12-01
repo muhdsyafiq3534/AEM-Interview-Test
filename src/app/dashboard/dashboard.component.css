@@ -4,22 +4,48 @@ table {
 
 .mat-cardd {
   width: 85%;
+  height: 99%;
 }
 
-#divChart{
+#divChart {
   display: block;
 }
 
-.tablecard{
-  width: 90%;
+.tablecard {
+  width: 93%;
 }
 
-#myChart1{
-  width:300px !important;
-  height:300px !important;
+#myChart {
+  width: 600px !important;
+  height: 300px !important;
+}
+
+#myChart1 {
+  width: 300px !important;
+  height: 300px !important;
 }
 
 .center {
   display: flex;
   justify-content: center;
+}
+
+.mat-card:not([class*=mat-elevation-z]) {
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 1),
+    0 1px 1px 0 rgba(0, 0, 0, 1),
+    0 1px 3px 0 rgba(0, 0, 0, 1);
+}
+
+.gap {
+  margin-left: 84%;
+  color: #8b8d8f;
+}
+
+.dashboard {
+  color: #8b8d8f;
+}
+
+.mat-toolbar.mat-primary {
+  background: #202020;
+  color: #fff;
 }
