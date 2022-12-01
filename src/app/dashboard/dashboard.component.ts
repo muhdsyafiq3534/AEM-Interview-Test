@@ -2,8 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DashboardClient } from '../clients/dashboard.client';
 import { AuthService } from '../services/auth.service';
-import { ChartConfiguration, ChartData, ChartOptions, ChartType } from 'chart.js';
-import { Chart, registerables } from 'chart.js';
+import { Chart } from 'chart.js';
 import { _countGroupLabelsBeforeOption } from '@angular/material/core';
 
 export interface chartData {
