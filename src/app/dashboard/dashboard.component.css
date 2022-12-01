@@ -1,3 +1,25 @@
 table {
   width: 100%;
 }
+
+.mat-cardd {
+  width: 85%;
+}
+
+#divChart{
+  display: block;
+}
+
+.tablecard{
+  width: 90%;
+}
+
+#myChart1{
+  width:300px !important;
+  height:300px !important;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}

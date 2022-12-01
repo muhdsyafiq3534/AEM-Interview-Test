@@ -2,8 +2,9 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DashboardClient } from '../clients/dashboard.client';
 import { AuthService } from '../services/auth.service';
-import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
-import { Chart } from 'chart.js/auto';
+import { ChartConfiguration, ChartData, ChartOptions, ChartType } from 'chart.js';
+import { Chart, registerables } from 'chart.js';
+import { _countGroupLabelsBeforeOption } from '@angular/material/core';
 
 export interface chartData {
   name: string
@@ -18,6 +19,12 @@ export interface barData {
 export interface barDetail {
   data: any
   label: any
+}
+
+export interface donutDetail {
+  value: number
+  name: string
+
 }
 
 export interface table {
@@ -35,13 +42,26 @@ export class DashboardComponent implements OnInit {
 
   public dashboard: Observable<any> = this.DashboardClient.getDashboardData();
 
+  @ViewChild('barCanvas') barCanvas: ElementRef | undefined;
+  barChart: any;
+
+
   test1: any
+  donut1: donutDetail[] = []
   donutName: any[] = []
   donutValue: any[] = []
   barName: barDetail[] = []
   users: table[] = []
   dataSource: any
-  displayedColumns: string[] = ["First Name", "Last Name", "User Name"];
+  displayedColumns: string[] = ["no","First Name", "Last Name", "User Name"];
+
+  getDonut: any
+  getDonutName: any[] = []
+  getDonutValue: number[] = []
+
+  getBar: any
+  getBarName: any[] = []
+  getBarValue: any[] = []
 
   constructor(
     private AuthService: AuthService,
@@ -49,7 +69,12 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getData()
+    this.getData();
+    this.getBarchart()
+    this.getdoughnutChart()
+  }
+
+  ngAfterViewInit() {
   }
 
   logout(): void {
@@ -76,7 +101,6 @@ export class DashboardComponent implements OnInit {
       });
 
       this.dataSource = this.users
-      console.log(this.dataSource, "datasorce");
 
     })
   }
@@ -86,7 +110,7 @@ export class DashboardComponent implements OnInit {
     datasets: [
       {
         data: this.donutValue,
-        backgroundColor: ["red", "yellow", "blue","purple"],
+        backgroundColor: ["red", "yellow", "blue", "purple"],
       },
     ]
   };
@@ -97,14 +121,86 @@ export class DashboardComponent implements OnInit {
     datasets: this.barName
   };
 
-  public doughnutChartLabels: string[] = this.donutName;
-  public doughnutChartDatasets: ChartConfiguration<'doughnut'>['data']['datasets'] = [
-    { data: this.donutValue },
-  ];
 
-  public chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-}
+  ////////////////////////////////////
+
+  getdoughnutChart() {
+    this.dashboard.subscribe(res =>{
+      this.getDonut = res
+      this.getDonut.chartDonut.forEach((x: chartData) => {
+
+        let data =  x.name
+        this.getDonutName.push(data)
+
+        //let data1 =  { x.value}
+        this.getDonutValue.push(x.value)
+      });
+      //console.log(this.getDonutName,'name');
+      //console.log(this.getDonutValue,'value');
+      var myChart = new Chart("myChart1", {
+        type: 'doughnut',
+        data: {
+          labels: this.getDonutName,
+          datasets: [{
+            data: this.getDonutValue
+          }]
+        },
+        options: {
+          responsive: true,
+          layout: {
+            autoPadding: true,
+              padding: {
+                  left: 0
+              }
+          }
+      }
+      });
+    })
+
+    //console.log(this.getDonutName,'name');
+    //console.log(this.getDonutValue,'value');
+
+  }
+
+  getBarchart() {
+    this.dashboard.subscribe(res =>{
+      this.getBar = res
+
+      this.getBar.chartBar.forEach((x: chartData) => {
+        let data = { data: [x.value]}
+
+        let data1 =[x.value]
+
+        this.getBarName.push(x.name)
+        this.getBarValue.push(x.value)
+      });
+      // console.log(this.getBarName,"name");
+      // console.log(this.getBarValue,"data");
+
+      var myChart = new Chart("myChart", {
+        type: 'bar',
+        data: {
+          labels: this.getBarName,
+          datasets: [{
+            data: this.getBarValue,
+            //label: "BarChart",
+          }],
+        },
+        options: {
+          plugins: {
+            legend: {
+                display: false,
+            },
+        },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    })
+
+  }
 
 }

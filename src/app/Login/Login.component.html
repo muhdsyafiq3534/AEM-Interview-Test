@@ -8,12 +8,33 @@
         <mat-label>Username</mat-label>
         <input matInput type="text" formControlName="username" />
       </mat-form-field>
+      <div class="help-block" *ngIf="loginForm.controls['username'].invalid && (loginForm.controls['username'].dirty)"
+       >
+        Please Enter a valid email address
+      </div>
+
       <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
-        <input matInput type="password" formControlName="password" />
+        <input matInput type="password" formControlName="password" minlength="6" />
       </mat-form-field>
+
+      <!-- <div *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty)">
+        <p class="help-block"
+          class="alert alert-danger">
+          Please Enter correct password
+        </p>
+        <p>
+          Password should be atleast 6 character
+        </p>
+      </div> -->
+
+      <div *ngIf="f['password'].errors && f['password'].errors['minlength']">
+        Password should be atleast 6 character.
+      </div>
+      <br>
       <div fxLayout="row" fxLayoutAlign="start center">
-        <button mat-raised-button color="primary" fxLayoutAlign="left" (click)="onSubmit()">
+        <button mat-raised-button color="primary" fxLayoutAlign="left" (click)="onSubmit()"
+          [disabled]="loginForm.pristine || loginForm.invalid" class="btn btn-success">
           SIGN IN
         </button>
       </div>

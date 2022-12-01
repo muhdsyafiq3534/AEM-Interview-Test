@@ -1,55 +1,53 @@
-<button mat-raised-button color="primary" (click)="logout()">Logout</button>
-
-<div>
-  <div>
-    <div style="display: block">
-      <canvas baseChart
-        [data]="doughnutChartData"
-        [type]="doughnutChartType">
-        (chartHover)="chartHovered($event)"
-      </canvas>
-    </div>
-  </div>
+<div fxLayout="column" fxLayoutAlign="center end">
+  <button mat-raised-button color="primary" (click)="logout()">Logout</button>
 </div>
 
 <div>
-  <div>
-    <div style="display: block">
-      <canvas baseChart
-        [data]="barChartData"
-        [type]="barChartType">
-      </canvas>
-    </div>
-  </div>
+  <mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile  fxLayout="column" fxLayoutAlign="center center">
+      <mat-card class="mat-cardd " >
+        <div id="divChart"  >
+          <h1>Doughnut Chart</h1>
+          <div class="center">
+            <canvas id="myChart1" ></canvas>
+          </div>
+        </div>
+      </mat-card>
+
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card class="mat-cardd ">
+        <div id="divChart">
+          <h1>Bar Chart</h1>
+          <canvas id="myChart"></canvas>
+        </div>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>
 
-
-<div>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-  <!-- <ng-container matColumnDef="no">
-    <th mat-header-cell *matHeaderCellDef> No. </th>
-    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-  </ng-container> -->
-
-  <ng-container matColumnDef="First Name">
-    <th mat-header-cell *matHeaderCellDef> First Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="Last Name">
-    <th mat-header-cell *matHeaderCellDef> Last Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="User Name">
-    <th mat-header-cell *matHeaderCellDef> User Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.username}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+<div id="#divChart" fxLayout="column" fxLayoutAlign="center center">
+  <mat-card class="tablecard">
+    <h1>User List</h1>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="no">
+        <th mat-header-cell *matHeaderCellDef> # </th>
+        <td mat-cell *matCellDef="let index=index">{{ index + 1 }} </td>
+      </ng-container>
+      <ng-container matColumnDef="First Name">
+        <th mat-header-cell *matHeaderCellDef> First Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="Last Name">
+        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+      </ng-container>
+      <ng-container matColumnDef="User Name">
+        <th mat-header-cell *matHeaderCellDef> User Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card>
 </div>
-
-
