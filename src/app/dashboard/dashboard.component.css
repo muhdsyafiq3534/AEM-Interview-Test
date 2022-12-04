@@ -16,13 +16,13 @@ table {
 }
 
 #myChart {
-  width: 600px !important;
-  height: 300px !important;
+  width: 550px !important;
+  height: 250px !important;
 }
 
 #myChart1 {
-  width: 300px !important;
-  height: 300px !important;
+  width: 250px !important;
+  height: 250px !important;
 }
 
 .center {
@@ -37,7 +37,7 @@ table {
 }
 
 .gap {
-  margin-left: 84%;
+  margin-left: 80%;
   color: #8b8d8f;
 }
 
